@@ -1,0 +1,25 @@
+# disable directory browsing
+AuthType Basic
+AuthName "Input your ID and Password."
+AuthUserFile /home/www/html/login/.htpasswd
+require valid-user
+# Options -Indexes
+AddDefaultCharset UTF-8
+
+# 指定したロボットやスパイダーのアクセスを阻止します。
+# <IfModule mod_rewrite.c>
+#SetEnvIfNoCase ^User-Agent$ .*(bot1|bot2|bot3|bot4|bot5|bot6|) HTTP_SAFE_BADBOT
+#SetEnvIfNoCase ^User-Agent$ .*(bot1|bot2|bot3|bot4|bot5|bot6|) HTTP_SAFE_BADBOT
+#Deny from env=HTTP_SAFE_BADBOT
+#</ifModule>
+
+# 特定のファイルのアクセスをブロック
+#<Files privatefile.jpg>
+# order allow,deny
+# deny from all
+#</Files>
+#<FilesMatch ".(htaccess|htpasswd|ini|phps|fla|psd|log|sh)$">
+# Order Allow,Deny
+# Deny from all
+# </FilesMatch>
+
