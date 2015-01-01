@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=320; initial-scale=1.0;
+　 maximum-scale=1.0; user-scalable=0;"/>
+<title>AndroidDays</title>
+</head>
+<body>
+<hr />
+<h1>公開エリア  (AndroidDays /home/www)</h1>
+
+<h2>DDNSの実験用CGI</h2>
+</br>
+<a href="/cgi-bin/ddns.cgi">アクセス元のIPアドレス取得</a>
+</br>
+<a href="/cgi-bin/ddns2.cgi">アクセス元のIPアドレスを取得してリンクに変換(DDNSモドキ)</a>
+<font color="red">(作成中)</font>
+
+<h2>CGIによるアクセスログ</h2>
+Apacheログの解析部を作成中 (一応動くが、内容はめちゃくちゃ、まだ未完成)
+</br>
+<a href="/cgi-bin/accLog.cgi">アクセスログ</a>
+
+
+</br>
+
+<hr />
+<h1>パスワードエリア</h1>
+<br />
+<h2>CGIによるloginサービス</h2>
+<a href="login/check.cgi">動作check</a>
+
+<h1>ビデオサーバ</h1>
+<h2>上記loginサービス利用のもの</h2>
+<font color="red" size=+2>注)　</font>
+<ol>
+  <li>Google ChromeとかFirefoxでは、表示できない。そのうち違うやり方にかえてからビデオサーバとして本運用する。 </li>
+  <li>なにせ、有休品だったPC利用のLinuxサーバなのでHDDはいくらでも増設できる。HDDはmdadmでRAID化してあるし、NASもマウンドできる。</li>
+  <li>videoタグによるやり方であり、Apple独自規格らしいので、Mac/iOSデバイスのSafariでのみ動作する。</li>
+  <li>元々、window用CGIであり、S-JISだったので誤動作。エンコードをUTF-8に替え、対応するcharsetもUTF-8に変えたら動いた。directoryも整理した。</li>
+</ol>
+<br />
+<a href="login/login.cgi">ビデオサービス</a>
+
+<br />
+<br />
+<h2>.htaccessによるもの</h2>
+<font color="red" size=+2>注)　</font> Chromeでは問題なく動く。safariでは、逆に全ファイルをダウンロードしようしてうまく動かない....
+<br />
+<a href="video/video.html">ビデオサービス</a>
+<br />
+<hr />
+</body>
+</html>
+
