@@ -165,7 +165,7 @@ table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: 
 </form>
 </div>
 
-タイトルや内容をクリックすると視聴できます（ブラウザの設定でASFとVLCを関連付けている必要があります）
+タイトル/サムネイルクリックで直接リンクで視聴、内容クリックでビューア視聴できます（ブラウザの設定でASFとVLCを関連付けている必要があります）
 {if count($records)}
 <table id="reservation_table">
  <tr>
@@ -185,8 +185,8 @@ table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: 
   <td>{$rec.starttime}</td>
   <td>{$rec.station_name}</td>
   <td>{$rec.mode}</td>
-  {if $use_thumbs == 1}<td><a href="{$rec.asf}">{$rec.thumb}</a></td>{/if}
-  <td><a href="{$rec.asf}" id="tid_{$rec.id}">{$rec.title}</a></td>
+  {if $use_thumbs == 1}<td><a href="{$rec.link}">{$rec.thumb}</a></td>{/if}
+  <td><a href="{$rec.link}" id="tid_{$rec.id}">{$rec.title}</a></td>
   <td><a href="{$rec.asf}" id="did_{$rec.id}">{$rec.description}</a></td>
   <td>{$rec.fsize}</td>
   <td><input type="button" value="変更" onClick="javascript:PRG.editdialog('{$rec.id}')" /></td>

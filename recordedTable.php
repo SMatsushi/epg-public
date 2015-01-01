@@ -60,7 +60,11 @@ try{
 		$arr['asf'] = "".$settings->install_url."/viewer.php?reserve_id=".$r->id;
 		$arr['title'] = htmlspecialchars($r->title,ENT_QUOTES);
 		$arr['description'] = htmlspecialchars($r->description,ENT_QUOTES);
-		$arr['thumb'] = "<img src=\"".$settings->install_url.$settings->thumbs."/".htmlentities($r->path, ENT_QUOTES,"UTF-8").".jpg\" />";
+		// $arr['link'] = $settings->install_url.$settings->spool."/".htmlentities($r->path, ENT_QUOTES,"UTF-8");
+		$arr['link'] = "/epgrec".$settings->spool."/".htmlentities($r->path, ENT_QUOTES,"UTF-8");
+		$arr['linkname'] = htmlentities($r->path, ENT_QUOTES,"UTF-8");
+		// $arr['thumb'] = "<img src=\"".$settings->install_url.$settings->thumbs."/".htmlentities($r->path, ENT_QUOTES,"UTF-8").".jpg\" />";
+		$arr['thumb'] = "<img src=\"/epgrec".$settings->thumbs."/".htmlentities($r->path, ENT_QUOTES,"UTF-8").".jpg\" />";
 		$arr['cat'] = $cat->name_en;
 		$arr['mode'] = $RECORD_MODE[$r->mode]['name'];
 		if (file_exists(INSTALL_PATH.$settings->spool."/".$r->path))

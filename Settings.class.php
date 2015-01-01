@@ -15,7 +15,8 @@ class Settings extends SimpleXMLElement {
 			
 			// キーワード自動録画の録画モード
 			if( $obj->exists("autorec_mode") == 0 ) {
-				$obj->autorec_mode = 0;
+				// $obj->autorec_mode = 0;
+				$obj->autorec_mode = 2;
 				$obj->save();
 			}
 			// CSの録画
@@ -158,7 +159,8 @@ class Settings extends SimpleXMLElement {
 			// 8月14日版以降に追加した設定項目
 			
 			// キーワード自動録画の録画モード
-			$xml->autorec_mode = 0;
+			// $xml->autorec_mode = 0;
+			$xml->autorec_mode = 2;
 			
 			// CS録画
 			$xml->cs_rec_flg = 0;

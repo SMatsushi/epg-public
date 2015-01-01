@@ -23,7 +23,7 @@
 <div>
 <span class="labelLeft">録画モード</span>
     <select name="record_mode" id="id_record_mode">
-        {section name=mode loop=$record_mode}
+        {section name=mode loop=$record_mode start=-1 step=-1}
           <option value="{$smarty.section.mode.index}">{$record_mode[mode].name}</option>
         {/section}
         </select>
