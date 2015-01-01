@@ -27,13 +27,18 @@ Apacheログの解析部を作成中 (一応動くが、内容はめちゃくち
 </br>
 
 <hr />
-<h1>パスワードエリア</h1>
+<h1>パスワード保護エリア</h1>
 <br />
-<h2>CGIによるloginサービス</h2>
+
+<h2>地デジ・BS/CS録画視聴サーバ(PT3/epgrec)</h2>
+<a href="/epgrec/">録画サービスへのリンク</a>
+<br />
+
+<h2>実験リンク</h2>
+<h3>CGIによるloginサービス</h3>
 <a href="login/check.cgi">動作check</a>
 
-<h1>ビデオサーバ</h1>
-<h2>上記loginサービス利用のもの</h2>
+<h3>上記loginサービス利用のもの</h3>
 <font color="red" size=+2>注)　</font>
 <ol>
   <li>Google ChromeとかFirefoxでは、表示できない。そのうち違うやり方にかえてからビデオサーバとして本運用する。 </li>
@@ -42,12 +47,9 @@ Apacheログの解析部を作成中 (一応動くが、内容はめちゃくち
   <li>元々、window用CGIであり、S-JISだったので誤動作。エンコードをUTF-8に替え、対応するcharsetもUTF-8に変えたら動いた。directoryも整理した。</li>
 </ol>
 <br />
-<a href="login/login.cgi">ビデオサービス</a>
+<a href="login/login.cgi">ビデオ配信サービス</a>
 
 <br />
-<br />
-<h2>.htaccessによるもの</h2>
-<font color="red" size=+2>注)　</font> Chromeでは問題なく動く。safariでは、逆に全ファイルをダウンロードしようしてうまく動かない....
 <br />
 <a href="video/video.html">ビデオサービス</a>
 <br />
