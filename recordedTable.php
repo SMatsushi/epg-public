@@ -3,6 +3,8 @@ include_once('config.php');
 include_once( INSTALL_PATH . '/DBRecord.class.php' );
 include_once( INSTALL_PATH . '/Smarty/Smarty.class.php' );
 include_once( INSTALL_PATH . '/Settings.class.php' );
+// include_once( INSTALL_PATH . '/reclib.php' );
+
 
 $settings = Settings::factory();
 
@@ -57,6 +59,8 @@ try{
 		$arr['station_name'] = $ch->name;
 		$arr['starttime'] = $r->starttime;
 		$arr['endtime'] = $r->endtime;
+		// $dursec = toTimestamp( $pend ) - toTimestamp( $psta );
+		// $arr['duration'] = date("H:i:s", $dursec);
 		$arr['asf'] = "".$settings->install_url."/viewer.php?reserve_id=".$r->id;
 		$arr['title'] = htmlspecialchars($r->title,ENT_QUOTES);
 		$arr['description'] = htmlspecialchars($r->description,ENT_QUOTES);
