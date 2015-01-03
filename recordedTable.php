@@ -104,10 +104,14 @@ try{
 		$arr['selected'] = $station == $c->id ? "selected" : "";
 		array_push( $stations, $arr );
 	}
-	
+
+	$rvs = DBRecord::createRecords(RESERVE_TBL, "WHERE complete='0'" );
+	$recd = DBRecord::createRecords(RESERVE_TBL, "WHERE complete='1'" );
+	$spacecmd = "./recspace.pl ".count($recd)." ".count($rvs);	
 	
 	$smarty = new Smarty();
-	$smarty->assign("sitetitle","録画済一覧");
+	$smarty->assign( "sitetitle", "録画済一覧" );
+	$smarty->assign( "space", exec($spacecmd) );
 	$smarty->assign( "records", $records );
 	$smarty->assign( "search", $search );
 	$smarty->assign( "stations", $stations );

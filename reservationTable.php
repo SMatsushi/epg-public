@@ -5,6 +5,8 @@ include_once( INSTALL_PATH . '/Smarty/Smarty.class.php' );
 
 try{
 	$rvs = DBRecord::createRecords(RESERVE_TBL, "WHERE complete='0' ORDER BY starttime ASC" );
+	$recd = DBRecord::createRecords(RESERVE_TBL, "WHERE complete='1' ORDER BY starttime ASC" );
+	$spacecmd = "./recspace.pl ".count($recd)." ".count($rvs);
 	
 	$reservations = array();
 	foreach( $rvs as $r ) {
@@ -26,6 +28,7 @@ try{
 	
 	$smarty = new Smarty();
 	$smarty->assign("sitetitle","録画予約一覧");
+	$smarty->assign("space", exec($spacecmd));
 	$smarty->assign( "reservations", $reservations );
 	$smarty->display("reservationTable.html");
 }
