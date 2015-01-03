@@ -170,6 +170,7 @@ table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: 
 {if count($records)}
 <table id="reservation_table">
  <tr>
+  <th>項番</th>
   <th>録画日時</th>
   <th>終了時間</th>
   <th>channel</th>
@@ -182,8 +183,10 @@ table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: 
   <th>削除</th>
  </tr>
 
+{$num=1}
 {foreach from=$records item=rec}
  <tr id="resid_{$rec.id}" class="ctg_{$rec.cat}">
+  <td>{$num++}</td>
   <td>{$rec.starttime}</td>
   <td>{$rec.endtime}</td>
   <td>{$rec.station_name}</td>

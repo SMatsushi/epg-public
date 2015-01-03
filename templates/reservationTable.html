@@ -131,6 +131,7 @@ table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: 
 {if count($reservations)}
 <table id="reservation_table">
  <tr>
+  <th>項番</th>
   <th>id</th>
   <th>種別</th>
   <th>ch</th>
@@ -143,8 +144,10 @@ table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: 
   <th>削除</th>
  </tr>
 
+{$num = 1}
 {foreach from=$reservations item=reserve}
  <tr id="resid_{$reserve.id}" class="ctg_{$reserve.cat}">
+  <td>{$num++}</td>
   <td>{$reserve.id}</td>
   <td>{$reserve.type}</td>
   <td id="chid_{$reserve.id}">{$reserve.channel}</td>
