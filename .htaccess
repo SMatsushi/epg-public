@@ -1,6 +1,7 @@
 # disable directory browsing
 AuthType Basic
 AuthName "Input your ID and Password."
+# AuthUserFile /home/www/epgrec/thumbs/.htpasswd
 AuthUserFile /home/www/html/login/.htpasswd
 require valid-user
 # Options -Indexes
