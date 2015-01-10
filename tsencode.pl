@@ -4,6 +4,7 @@ use strict;
 #ARGV[0] Target TS File
 #ARGV[1] Output Filename
 #ARGV[2] Video Size (Ex. 480x360 960x720)
+#ARGV[3] Log file name (optional)
 
 # my $ffpreset = "/var/www/html/epgrec/libx264-hq-ts.ffpreset";
 my $cmd = "/usr/local/bin/ffmpeg";
@@ -11,11 +12,18 @@ my $log = 1;
 my $ffpreset = "/home/www/epgrec/libx264.ffpreset";
 
 my $br; #Audio BitRate
+my $logfile = "$0.log";
+if ($ARGV[3]) {
+    $logfile = $ARGV[3];
+}
 
 if ($log) {
-	open(OF, "> $0.log");
-	print OF "$^T $0 $ARGV[0] $ARGV[1] $ARGV[2]\n";
-	&printdate;
+    if (-e $logfile) {
+	rename $logfile, $logfile.".old";
+    }
+    open(OF, "> $logfile");
+    print OF "$0 $ARGV[0] $ARGV[1] $ARGV[2] $ARGV[3]\n";
+    &printdate;
 }
 open(my $res, "$cmd -i $ARGV[0] 2>&1 |");
 
@@ -38,9 +46,9 @@ close($res);
 print OF "vstr=$vstr astr=$astr br=$br\n" if ($log);
 
 my $cmdstr;
-#my $loglevel="verbose"; # most verbose
+my $loglevel="verbose"; # most verbose
 #my $loglevel="info";
-my $loglevel="warning";
+#my $loglevel="warning";
 
 #Encode
 # $cmdstr = "$cmd -i $ARGV[0] -v $loglevel -y -f mp4 -vcodec libx264 -fpre $ffpreset -r 30000/1001 -aspect 16:9 -s $ARGV[2] -bufsize 2000k -maxrate 5000k -vsync 1 -acodec libfaac -ac 2 -ar 48000 -ab 128k -map 0:0 -map 0:2 -threads 0 $ARGV[1]";
@@ -56,12 +64,42 @@ if ($log) {
 	print OF "$cmdstr\n";
 }
 open(my $res, "$cmdstr 2>&1 |");
+my @crlines;
+foreach $_ (<$res>) {
+   if ($log) {
+	# formatting ^r terminated lines.
+	if(m/\r/) {
+	    @crlines=split(/\r/);
+	    my $prev = "";
+	    my $prnext = 0;
+	    my $lastPrMin = "";
+	    foreach my $ln (@crlines) {
+		my $doprint = 0;
+		next if ($ln =~ /^\s+$/);
+		if ($ln !~ /^frame/) {
+		    print OF "$prev\n";
+		    $doprint = $prnext = 1;
+		} elsif ($ln =~ /(\d+):(\d+):(\d+).(\d+)/) {
+		    if ($2 ne $lastPrMin) {
+			$doprint = 1;
+			$lastPrMin = $2;
+		    }
+		} elsif ($prnext) {
+		    $doprint++; $prnext = 0;
+		}
+
+		if ($doprint) {
+		    print OF "$ln\n";
+		}
+		$prev = $ln;
+	    }
+	}
+    }
+}
+
 if ($log) {
-	print OF <$res>;
 	&printdate;
 	close(OF);
-} else {
-	<$res>;
 }
 close($res);
 
