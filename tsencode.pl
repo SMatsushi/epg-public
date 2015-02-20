@@ -25,14 +25,20 @@ if ($log) {
     print OF "$0 $ARGV[0] $ARGV[1] $ARGV[2] $ARGV[3]\n";
     &printdate;
 }
-open(my $res, "$cmd -i $ARGV[0] 2>&1 |");
 
-my ($vstr, $astr); #save StreamID
+my $pass1cmd = "$cmd -i $ARGV[0] 2>&1 |";
+print OF "Running $pass1cmd ...\n" if ($log);
+open(my $res, $pass1cmd);
+
+my ($vstr, $vid, $astr); #save StreamID
 foreach(<$res>){
     print OF $_ if ($log);
     #Get Video StreamID
-    if($_ =~ /\#([0-9\:]+)\[.+mpeg2video/ && $vstr eq ""){
-	$vstr = $1;
+    if($_ =~ /\#(\d+):(\d+)\[.+mpeg2video/) {
+	if ($vstr eq "" || $2 < $vid) {
+	    $vid = $2;
+	    $vstr = "$1:$2";
+	}
     }
     #Get Audio StreamID
     elsif($_ =~ /\#([0-9\:]+)\[.+Audio.+, ([0-9]+) kb\/s/){
@@ -54,6 +60,9 @@ my $loglevel="verbose"; # most verbose
 # $cmdstr = "$cmd -i $ARGV[0] -v $loglevel -y -f mp4 -vcodec libx264 -fpre $ffpreset -r 30000/1001 -aspect 16:9 -s $ARGV[2] -bufsize 2000k -maxrate 5000k -vsync 1 -acodec libfaac -ac 2 -ar 48000 -ab 128k -map 0:0 -map 0:2 -threads 0 $ARGV[1]";
 # $cmdstr = "$cmd -i $ARGV[0] -v $loglevel -y -f mp4 -vcodec libx264 -fpre $ffpreset -r 30000/1001  -aspect 16:9 -s $ARGV[2] -bufsize 2000k -maxrate 5000k -vsync 1 -ac 2 -map $vstr -map $astr -threads 0 $ARGV[1]";
 $cmdstr = "$cmd -i $ARGV[0] -v $loglevel -y -f mp4 -vcodec libx264 -aspect 16:9 -s $ARGV[2] -bufsize 2000k -maxrate 5000k -vsync 1 -ac 2 -map $vstr -map $astr -threads 0 $ARGV[1]";
+
+# no loging
+# $cmdstr = "$cmd -i $ARGV[0] -y -f mp4 -vcodec libx264 -aspect 16:9 -s $ARGV[2] -bufsize 2000k -maxrate 5000k -vsync 1 -ac 2 -map $vstr -map $astr -threads 0 $ARGV[1]";
 # $cmdstr = "$cmd -i $ARGV[0] -v $loglevel -y -aspect 16:9 -s $ARGV[2] -bufsize 2000k -maxrate 5000k -vsync 1 -map $vstr -map $astr -threads 0 $ARGV[1]";
 
 # $cmdstr = "$cmd -i $ARGV[0] -y -aspect 16:9 -s $ARGV[2] -vsync 1 -threads 4 $ARGV[1]";

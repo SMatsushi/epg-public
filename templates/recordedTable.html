@@ -167,7 +167,8 @@ table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: 
 </form>
 </div>
 
-タイトル/サムネイルクリックで直接リンクで視聴、内容クリックでビューア視聴できます（ブラウザの設定でASFとVLCを関連付けている必要があります）
+タイトルクリックで直接リンク視聴(Google Chromeのみ可)、サムネール右クリックから
+.tsファイル(mpeg2)ダウンロード、内容クリックでビューア視聴できます（ブラウザの設定でASFとVLCを関連付けている必要があります）
 {if count($records)}
 <table id="reservation_table">
  <tr>
@@ -192,7 +193,7 @@ table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: 
   <td>{$rec.endtime}</td>
   <td>{$rec.station_name}</td>
   <td>{$rec.mode}</td>
-  {if $use_thumbs == 1}<td><a href="{$rec.link}">{$rec.thumb}</a></td>{/if}
+  {if $use_thumbs == 1}<td><a href="{$rec.link}_tmp.ts">{$rec.thumb}</a></td>{/if}
   <td><a href="{$rec.link}" id="tid_{$rec.id}">{$rec.title}</a></td>
   <td><a href="{$rec.asf}" id="did_{$rec.id}">{$rec.description}</a></td>
   <td>{$rec.fsize}B</td>

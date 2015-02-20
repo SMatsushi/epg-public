@@ -23,7 +23,10 @@ elif [ ${MODE} == 2 ]; then
     # <-解像度は4:3で指定（理由は後述）
     $PERL $ENCPROG ${OUTPUT}_tmp.ts ${OUTPUT} 640x360
 #    $PERL $ENC2PROG ${OUTPUT}_tmp.ts t3.mp4 640x360
-#    rm ${OUTPUT}_tmp.ts
+
+#     echo mv ${OUTPUT}_tmp.ts video/ts.ok >> video/ts.log
+#     mv ${OUTPUT}_tmp.ts video/ts.ok
+     rm ${OUTPUT}_tmp.ts
 
 # mode 2 example is as follows
 #elif [ ${MODE} = 2 ]; then
