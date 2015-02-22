@@ -17,6 +17,7 @@
 	"GR28" => "放送大学",
 );
 
+$prog=$0;
 $tpl = "index.tpl";
 
 open(TPL, "$tpl") || die "Can not open template $tpl";
@@ -35,7 +36,7 @@ foreach(<$res>){
 		$title = $4;
 
 		$vlist .= sprintf("<li> <a href=\"%s\">\n", $vfile);
-		$vlist .= sprintf("\t%s-%s, %10s: %s",
+		$vlist .= sprintf("\t%s-%s :<font color=\"blue\">%10s</font>: %s",
 			&fmtdate($start, 0),
 			&fmtdate($end, 1),
 			$GR_CHANNEL_MAP{$chan} ? $GR_CHANNEL_MAP{$chan} : $chan,
@@ -48,6 +49,13 @@ foreach(<$res>){
 foreach (<TPL>) {
 	if (/%%VLIST%%/) {
 		print $vlist;
+	} elsif (/%%PROG%%/) {
+		printf("<div align=\"right\">\n");
+#		printf("\tCreated by %s on %s\n",
+#			$prog, &currentdate);
+		printf("\tCreated on %s\n",
+			&currentdate);
+		printf("</div>\n");
 	} else {
 		print;
 	}
@@ -83,12 +91,12 @@ sub fmtdate {
 	}
 }
 
-sub printdate {
+sub currentdate {
 	my @dayofw = ('Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat');
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
 	$year += 1900;
 	$mon += 1;
-	printf("**Now** %d/%02d/%02d (%s) %d:%02d:%02d ****\n", 
+	sprintf("%d/%02d/%02d (%s) %d:%02d:%02d", 
 		$year, $mon, $mday,  $dayofw[$wday],
 		$hour, $min, $sec);
 }

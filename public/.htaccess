@@ -12,6 +12,9 @@ Options +ExecCGI
 AddType text/html .pl .cgi
 AddHandler cgi-script .pl .cgi
 
+# デフォルトページの指定
+DirectoryIndex index.pl index.html
+
 # 指定したロボットやスパイダーのアクセスを阻止します。
 # <IfModule mod_rewrite.c>
 #SetEnvIfNoCase ^User-Agent$ .*(bot1|bot2|bot3|bot4|bot5|bot6|) HTTP_SAFE_BADBOT
