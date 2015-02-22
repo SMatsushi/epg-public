@@ -1,10 +1,19 @@
+# See also: http://htaccess.pasoa.com/pass.htm
+#	http://coliss.com/articles/build-websites/operation/work/htaccess-for-all-by-sitepoint.html
+
+# Timezone
+Setenv TZ Asia/Tokyo
+# do not show path
+Options All -Indexes
 # disable directory browsing
-AuthType Basic
-AuthName "Input your ID and Password."
-AuthUserFile /home/www/html/login/.htpasswd
-require valid-user
+# AuthType Basic
+# AuthName "Input your ID and Password."
+# AuthUserFile /home/www/epgrec/thumbs/.htpasswd
+# AuthUserFile /home/www/html/login/.htpasswd
+# require valid-user
 # Options -Indexes
 AddDefaultCharset UTF-8
+DefaultLanguage ja-JP
 
 # 指定したロボットやスパイダーのアクセスを阻止します。
 # <IfModule mod_rewrite.c>

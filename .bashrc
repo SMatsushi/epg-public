@@ -10,8 +10,6 @@ alias more=less
 alias ddiff='diff -l -r '
 alias sob='source ~/.bashrc'
 alias quicktime='/Applications/QuickTime\ Player.app/Contents/MacOS/QuickTime\ Player'
-alias rmkonto='find ~/Library/Mail/V2/IMAP-matsushi* -name '*Konto*' -print -exec /bin/rm -f {} \;'
-export doct=~/Dropbox/doc/academic/mypaper/Doctorial
 #alias '-'='%-'
 #alias '+'='%+'
 alias sshushome='ssh -p 12122 -Y iphonedays.miniDNS.net'
@@ -24,8 +22,6 @@ pucp() { tar cf - $* | (pushd; tar xvf - ) }
 #export PS1="\h:\W\$ "
 export PS1="[\u@\h \W]\$ "
 
-export Doctrial=~/Dropbox/doc/academic/mypaper/Doctorial
-export CS142=~/Dropbox/doc/Stanford/Class/2013SpringCS142
 alias emacs="Emacs" # referes /Applications/Emacs.app
 # export PATH=/opt/local/bin:~/bin:~/scripts:$PATH:/Applications/Emacs-23.3.app/Contents/MacOS:/Applications/gnuplot.app:/Applications/gnuplot.app/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/ImageMagick-6.8.7/bin/:.
 export PATH=PATH=/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:~/bin:~/scripts:.
