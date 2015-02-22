@@ -24,7 +24,7 @@ open(TPL, "$tpl") || die "Can not open template $tpl";
 
 $cmd = "ls *.mp4 |";
 
-$vlist = "";
+%vlist = ();
 open($res, $cmd);
 
 foreach(<$res>){
@@ -35,20 +35,24 @@ foreach(<$res>){
 		$end = $3;
 		$title = $4;
 
-		$vlist .= sprintf("<li> <a href=\"%s\">\n", $vfile);
-		$vlist .= sprintf("\t%s-%s :<font color=\"blue\">%10s</font>: %s",
+		$line = sprintf("<li> <a href=\"%s\">\n", $vfile);
+		$line .= sprintf("\t%s-%s :<font color=\"blue\">%10s</font>: %s",
 			&fmtdate($start, 0),
 			&fmtdate($end, 1),
 			$GR_CHANNEL_MAP{$chan} ? $GR_CHANNEL_MAP{$chan} : $chan,
 			$title);
-		$vlist .= sprintf("</a></li>\n");
+		$line .= sprintf("</a></li>\n");
+
+		$vlist{$start} = $line;	# to sort by start time
 	}
 }
 
 # print $vlist;
 foreach (<TPL>) {
 	if (/%%VLIST%%/) {
-		print $vlist;
+		for my $prog (sort keys %vlist) {
+			print $vlist{$prog};
+		}
 	} elsif (/%%PROG%%/) {
 		printf("<div align=\"right\">\n");
 #		printf("\tCreated by %s on %s\n",
