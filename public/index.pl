@@ -36,7 +36,7 @@ foreach(<$res>){
 		$title = $4;
 
 		$line = sprintf("<li> <a href=\"%s\">\n", $vfile);
-		$line .= sprintf("\t%s-%s :<font color=\"blue\">%10s</font>: %s",
+		$line .= sprintf("\t%s-%s :<font color=\"red\">%10s</font>: %s",
 			&fmtdate($start, 0),
 			&fmtdate($end, 1),
 			$GR_CHANNEL_MAP{$chan} ? $GR_CHANNEL_MAP{$chan} : $chan,
