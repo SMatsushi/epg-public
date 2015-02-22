@@ -1,4 +1,5 @@
 #!/usr/local/bin/perl
+use Time::Local qw(timelocal);
 
 #// 首都圏用地上デジタルチャンネルマップ
 #// 識別子 => チャンネル番号
@@ -22,26 +23,35 @@ $tpl = "index.tpl";
 
 open(TPL, "$tpl") || die "Can not open template $tpl";
 
-$cmd = "ls *.mp4 |";
+$cmd = "/bin/ls -l *.mp4 |";
 
 %vlist = ();
 open($res, $cmd);
 
 foreach(<$res>){
+	@field = split;
+	$sz = $field[4];
+	$_ = $field[8];
     if(/^(GR\d+)_(\d+)_(\d+)_(.*)\.mp4$/) {
 		$vfile = $_; chomp($vfile);
 		$chan = $1;
 		$start = $2;
 		$end = $3;
 		$title = $4;
+		$szMB = int($sz/1024/1024);
+		my ($sdate, $ssecux) =	&fmtdate($start, 0);
+		my ($edate, $esecux) =	&fmtdate($end, 1);
 
 		$line = sprintf("<li> <a href=\"%s\">\n", $vfile);
 		$line .= sprintf("\t%s-%s :<font color=\"red\">%10s</font>: %s",
-			&fmtdate($start, 0),
-			&fmtdate($end, 1),
+			$sdate, $edate,
 			$GR_CHANNEL_MAP{$chan} ? $GR_CHANNEL_MAP{$chan} : $chan,
 			$title);
-		$line .= sprintf("</a></li>\n");
+		
+	    $dur = $esecux - $ssecux;
+		$line .= sprintf("</a> (%d MB, %d sec, %.2f KB/s(平均レート) )</li>\n", $szMB,
+			$dur, $szMB * 1024 /$dur
+		);
 
 		$vlist{$start} = $line;	# to sort by start time
 	}
@@ -82,17 +92,21 @@ sub date2dow {
 }
 
 sub fmtdate {
+	my $rstr;
+	my $rsec = 0;
 	if ($_[0] =~ /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/) {
+		$rsec = timelocal($6,$5,$4,$3,$2,$1,$0);
 		if ($_[1]) {
-			sprintf("%s:%s", $4,$5);
+			$rstr = sprintf("%s:%s", $4,$5);
 		} else {
-			sprintf("%s/%s/%s(%s) %s:%s", $1,$2,$3,
+			$rstr = sprintf("%s/%s/%s(%s) %s:%s", $1,$2,$3,
 				&date2dow($1,$2,$3),
 				$4,$5);
 		}
 	} else {
-		print("Error: Unknown date format: $_[0]\n");
+		$rstr = "Error: Unknown date format: $_[0]";
 	}
+	return ($rstr, $rsec);
 }
 
 sub currentdate {
