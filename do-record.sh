@@ -21,10 +21,10 @@ elif [ ${MODE} = 1 ]; then
 elif [ ${MODE} == 2 ]; then
     $RECORDER --b25 --strip $CHANNEL $DURATION ${OUTPUT}_tmp.ts >/dev/null
     # <-解像度は4:3で指定（理由は後述）
-    $PERL $ENCPROG ${OUTPUT}_tmp.ts ${OUTPUT} 640x360
+    $PERL $ENCPROG ${OUTPUT}_tmp.ts ${OUTPUT} 640x360 ${OUTPUT}.log
+    mv ${OUTPUT}.log video/ts.log
 #    $PERL $ENC2PROG ${OUTPUT}_tmp.ts t3.mp4 640x360
-
-#     echo mv ${OUTPUT}_tmp.ts video/ts.ok >> video/ts.log
+#     echo mv ${OUTPUT}_tmp.ts video/ts.ok >> video/tsencode.log
 #     mv ${OUTPUT}_tmp.ts video/ts.ok
      rm ${OUTPUT}_tmp.ts
 
