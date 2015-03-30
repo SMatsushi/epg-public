@@ -30,22 +30,26 @@ my $pass1cmd = "$cmd -i $ARGV[0] 2>&1 |";
 print OF "Running $pass1cmd ...\n" if ($log);
 open(my $res, $pass1cmd);
 
-my ($vstr, $vid, $astr); #save StreamID
+my ($vstr, $vid, $astr, $aid); #save StreamID
 foreach(<$res>){
     print OF $_ if ($log);
     #Get Video StreamID
     if($_ =~ /\#(\d+):(\d+)\[.+mpeg2video/) {
-	if ($vstr eq "" || $2 < $vid) {
-	    $vid = $2;
-	    $vstr = "$1:$2";
-	}
+		if ($vstr eq "" || $2 < $vid) {
+			$vid = $2;
+			$vstr = "$1:$2";
+		}
     }
     #Get Audio StreamID
-    elsif($_ =~ /\#([0-9\:]+)\[.+Audio.+, ([0-9]+) kb\/s/){
-	if($2 > $br){
-	    $astr = $1;
-	    $br = $2;
-	}
+    elsif($_ =~ /\#(\d+):(\d+)\[.+Audio.+, ([0-9]+) kb\/s/){
+		if ($astr eq "" || $2 < $aid) {
+			$aid = $2;
+			$astr = "$1:$2";
+#    elsif($_ =~ /\#(\d+):(\d+)\[.+Audio.+, ([0-9]+) kb\/s/){
+#		if($3 > $br){
+#			$astr = $1;
+#			$br = $3;
+		}
     }
 }
 close($res);
