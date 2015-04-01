@@ -31,6 +31,7 @@ print OF "Running $pass1cmd ...\n" if ($log);
 open(my $res, $pass1cmd);
 
 my ($vstr, $vid, $astr, $aid); #save StreamID
+# first search video stream
 foreach(<$res>){
     print OF $_ if ($log);
     #Get Video StreamID
@@ -38,13 +39,30 @@ foreach(<$res>){
 		if ($vstr eq "" || $2 < $vid) {
 			$vid = $2;
 			$vstr = "$1:$2";
+            print OF "** \nFound vstr=$vstr\n" if ($log);
 		}
     }
+}
+
+
+# then search Audio stream
+print OF "Running $pass1cmd ... again\n" if ($log);
+open(my $res2, $pass1cmd);
+
+foreach(<$res2>){
     #Get Audio StreamID
-    elsif($_ =~ /\#(\d+):(\d+)\[.+Audio.+, ([0-9]+) kb\/s/){
-		if ($astr eq "" || $2 < $aid) {
+    print OF $_ if ($log);
+    if($_ =~ /\#(\d+):(\d+)\[.+Audio:/){
+#        printf(OF "** id=%d vid=%d\n", $2, $vid)  if ($log);
+        if ($2 == ($vid + 1)) {
+            $aid = $2;
+            $astr = "$1:$2";
+            print OF "\n** Found astr=$astr and exit.." if ($log);
+            last;
+        } elsif ($astr eq "" || $2 < $aid) {
 			$aid = $2;
 			$astr = "$1:$2";
+            print OF "Found astr=$astr and continue.." if ($log);
 #    elsif($_ =~ /\#(\d+):(\d+)\[.+Audio.+, ([0-9]+) kb\/s/){
 #		if($3 > $br){
 #			$astr = $1;
@@ -76,6 +94,7 @@ if ($log) {
 	&printdate;
 	print OF "$cmdstr\n";
 }
+
 open(my $res, "$cmdstr 2>&1 |");
 my @crlines;
 foreach $_ (<$res>) {
