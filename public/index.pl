@@ -67,7 +67,7 @@ foreach (<TPL>) {
 		printf("<div align=\"right\">\n");
 #		printf("\tCreated by %s on %s\n",
 #			$prog, &currentdate);
-		printf("\tCreated on %s\n",
+		printf("\tCreated on %s (JST)\n",
 			&currentdate);
 		printf("</div>\n");
 	} else {
