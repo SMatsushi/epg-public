@@ -3,6 +3,7 @@ alias pu=pushd
 alias po=popd
 alias ph='pushd ~'
 # alias ls='ls -F'
+alias vi=vim
 alias ls='ls -F --color=auto'
 alias h=history
 alias j=jobs
