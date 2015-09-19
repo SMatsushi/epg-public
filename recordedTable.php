@@ -66,6 +66,7 @@ try{
 		$arr['description'] = htmlspecialchars($r->description,ENT_QUOTES);
 		// $arr['link'] = $settings->install_url.$settings->spool."/".htmlentities($r->path, ENT_QUOTES,"UTF-8");
 		$arr['link'] = "/epgrec".$settings->spool."/".htmlentities($r->path, ENT_QUOTES,"UTF-8");
+		$arr['publink'] = "/public"."/".htmlentities($r->path, ENT_QUOTES,"UTF-8");
 		$arr['linkname'] = htmlentities($r->path, ENT_QUOTES,"UTF-8");
 		// $arr['thumb'] = "<img src=\"".$settings->install_url.$settings->thumbs."/".htmlentities($r->path, ENT_QUOTES,"UTF-8").".jpg\" />";
 		$arr['thumb'] = "<img src=\"/epgrec".$settings->thumbs."/".htmlentities($r->path, ENT_QUOTES,"UTF-8").".jpg\" />";
