@@ -334,10 +334,23 @@
 			}
 		},
 		ch:function(){
-			var now = new Date();
+//			var now = new Date();
+// local time
+			var lnow = new Date();
+//			console.log('lnow: %d', lnow);
+//			console.log('lnow.getTime(): %d', lnow.getTime());
+//			console.log('UTC Hour: %d', (lnow.getTime() / (60000 * 60)) % 24);
+// get local tz offset
+            var tzOffset = lnow.getTimezoneOffset();
+//			console.log('tzOffset=%d', tzOffset);
+// convert to JST
+            var jstOffs = 9 * 60 + tzOffset;
+//			console.log('Offs=%d', jstOffs);
+            var now = new Date(lnow.getTime() + (jstOffs * 60000));
+//			console.log('JST now: %s', now.toString());
+//
 			if(this.startTime){
 				if((now >= this.startTime) && (this.endTime >= now)){
-//					console.log((now - this.startTime) / 60000);
 					$('#' + this.defaultID).css({top:(now - this.startTime) / 60000 * INISet.dotMin}).show()
 				} else {
 					$('#' + this.defaultID).hide()
