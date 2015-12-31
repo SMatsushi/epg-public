@@ -76,6 +76,13 @@ try{
 			$arr['fsize'] = filesize_n(INSTALL_PATH.$settings->spool."/".$r->path);
 		else
 			$arr['fsize'] = '';
+		if (file_exists(INSTALL_PATH."/..".$arr['publink'])) {
+			$arr['publish'] = '公開中';
+			$arr['pubcategory'] = 'published';
+		} else {
+			$arr['publish'] = '非';
+			$arr['pubcategory'] = 'private';
+        }
 		
 		array_push( $records, $arr );
 	}

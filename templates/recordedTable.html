@@ -55,6 +55,18 @@
 			$('#floatBox4Dialog').html(str);
 			$('#floatBox4Dialog').dialog('open','center');
 		},
+		publish_dialog:function(id, pubstatus) {
+			$('#floatBox4Dialog').dialog({title:'公開/非公開',width:500})
+			var str;
+			str  = '<div class="prg_title">録画ID:' + id + '</div>';
+			str += '<input type="hidden" name="reserve_id" id="id_reserve_id" value="' + id +  '" />';
+			str += '<div><span class="labelLeft">タイトル</span><input name="title" id="id_title" size="30"  value="'+ $('#tid_' + id ).html() + '" /></div>';
+			str += '<div><span class="labelLeft">概要</span><textarea name="description" id="id_description" cols="30" rows="5" >' + $('#did_' + id ).html() + '</textarea></div>';
+			str += '<div style="margin:2em 0 1em 0;text-align:center;"><a href="javascript:PRG.edit()" class="ui-state-default ui-corner-all ui-dialog-buttonpane button">変更する</a></div>';
+			
+			$('#floatBox4Dialog').html(str);
+			$('#floatBox4Dialog').dialog('open','center');
+		},
 		edit:function() {
 			var id_reserve_id = $('#id_reserve_id').val();
 			var id_title = $('#id_title').val();
@@ -127,6 +139,8 @@ table#reservation_table tr.ctg_anime, #category_select a.ctg_anime {background-c
 table#reservation_table tr.ctg_variety, #category_select a.ctg_variety {background-color: #FFD2EB;}
 table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: #E4F4F4;}
 
+button#publish_button,   #category_select a.btn_published    {background-color: salmon;}
+button#publish_button,   #category_select a.btn_private      {background-color: white;}
 
 #floatBox4Dialog .prg_title{font-size:120%;font-weight:bold;padding:0.4em 0;text-align:center;}
 #floatBox4Dialog .prg_rec_cfg{background:#EEE;padding:1em 2em;margin:0.4em 0;}
@@ -166,7 +180,6 @@ table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: 
 <input type="submit" value="絞り込む" />
 </form>
 </div>
-
 タイトルクリックで直接リンク視聴(Google Chromeのみ可)、サムネール右クリックから
 .tsファイル(mpeg2)ダウンロード、内容クリックでビューア視聴できます（ブラウザの設定でASFとVLCを関連付けている必要があります）
 {if count($records)}
@@ -183,6 +196,7 @@ table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: 
   <th>ファイルサイズ</th>
   <th>変更</th>
   <th>削除</th>
+  <th>公開</th>
  </tr>
 
 {$num=1}
@@ -199,6 +213,8 @@ table#reservation_table tr.ctg_10, #category_select a.ctg_10 {background-color: 
   <td>{$rec.fsize}B</td>
   <td><input type="button" value="変更" onClick="javascript:PRG.editdialog('{$rec.id}')" /></td>
   <td><input type="button" value="削除" onClick="javascript:PRG.dialog('{$rec.id}','{$rec.title|escape}')" /></td>
+  <td><input type="button" id="publish_button" class="btn_{$rec.pubcategory}"
+        value="{$rec.publish}" onClick= "javascript:PRG.publish_dialog('{$rec.id}', '{$rec.pubcategory}')" /></td>
  </tr>
 {/foreach}
 </table>
