@@ -17,7 +17,18 @@ alias sshushome='ssh -p 12122 -Y iphonedays.miniDNS.net'
 alias sshvushome='ssh -v -p 12122 -Y iphonedays.miniDNS.net'
 alias sftpushome='sftp -P 12122 iphonedays.miniDNS.net'
 
-pucp() { tar cf - $* | (pushd; tar xvf - ) }
+# wrong space corrupts it...
+# alias linkpub='echo ln $1 ~/public/$1; echo chmod 444 ~/public/$1'
+function linkpub() {
+    ln $1 ~/public
+    chmod 444 ~/public/$1
+}
+
+alias pucp='tar cf - $* | (pushd; tar xvf - )'
+
+#function pucp() {
+#   tar cf - $* | (pushd; tar xvf - )
+#}
 
 #export PS1="\h:\!:\W> "
 #export PS1="\h:\W\$ "
