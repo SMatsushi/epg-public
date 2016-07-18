@@ -21,8 +21,9 @@ try{
 		$arr['channel'] = $r->channel;
 		$arr['starttime'] = $r->starttime;
 		$arr['endtime'] = $r->endtime;
-        if( time() > toTimestamp($r->endtime) ) {
-             // 終わったはずの録画がまだ予約になっている
+        if( time() > (toTimestamp($r->endtime) + 600) ) {
+             // 終わったはずの録画がまだ予約になっている,
+             // unix timestamp (sec) であり，recorder.phpとの競合防止のため，10分のマージンを入れる
              $r->complete = 1;    // 終わったことにする
              $logfp = fopen($logfile, "a");
              fwrite($logfp, "録画ID".$r->id.":".$r->type.$r->channel.$r->title."を録画終了にした\n" );
@@ -38,7 +39,7 @@ try{
 		array_push( $reservations, $arr );
 	}
     if ($logWritten > 0) {
-        fwrite($logfp, $logWritten." entries written");
+        fwrite($logfp, "-- ".$logWritten." entries written.\n");
         fclose($logfp);
     }
 	
