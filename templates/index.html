@@ -53,7 +53,11 @@
 			if ($(this).hasClass('prg_rec')) {
 				str += '<div style="margin:2em 0 1em 0;text-align:center;"><a href="javascript:PRG.cancel(' + prgID + ')" class="ui-state-default ui-corner-all ui-dialog-buttonpane button">予約キャンセル</a></div>';
 			} else {
-				str += '<div style="margin:2em 0 1em 0;text-align:center;"><a href="javascript:PRG.rec(' + prgID + ')" class="ui-state-default ui-corner-all ui-dialog-buttonpane button">簡易予約</a>　<a href="javascript:PRG.customform(' + prgID + ')" class="ui-state-default ui-corner-all ui-dialog-buttonpane button">予約カスタマイズ</a></div>';
+				str += '<div style="margin:2em 0 1em 0;text-align:center;">' 
+                    + ' <a href="javascript:PRG.rec(' + prgID + ')" class="ui-state-default ui-corner-all ui-dialog-buttonpane button">簡易予約</a>'
+                    + ' <a href="javascript:PRG.recP5(' + prgID + ')" class="ui-state-default ui-corner-all ui-dialog-buttonpane button">終了5分延長予約</a>'
+                    + ' <a href="javascript:PRG.customform(' + prgID + ')" class="ui-state-default ui-corner-all ui-dialog-buttonpane button">予約カスタマイズ</a>'
+                    + '</div>';
 			}
 			$('#floatBox4Dialog').html(str);
 			$('#floatBox4Dialog').dialog('open', 'center');
@@ -166,6 +170,17 @@
 		},
 		rec:function(id){
 			$.get(INISet.prgRecordURL, { program_id: id } ,function(data){
+				if(data.match(/^error/i)){
+					alert(data);
+					$('#floatBox4Dialog').dialog('close');
+				}else{
+					$('#prgID_' + id).addClass('prg_rec');
+					$('#floatBox4Dialog').dialog('close');
+				}
+			});
+		},
+		recP5:function(id){
+			$.get(INISet.prgRecordP5URL, { program_id: id } ,function(data){
 				if(data.match(/^error/i)){
 					alert(data);
 					$('#floatBox4Dialog').dialog('close');
@@ -713,6 +728,7 @@ h2 {padding: 4px}
 var INISet = {
 {/literal}
 	prgRecordURL : 'simpleReservation.php',		// 簡易予約
+	prgRecordP5URL : 'simpleReservationP5.php',		// 簡易予約
 	prgRecordPlusURL : 'recordp.php',		// 詳細予約
 	prgCancelURL : 'cancelReservation.php',		// 予約キャンセル
 	dotMin : {$height_per_min},

@@ -9,7 +9,8 @@ echo "SID  : $SID"
 
 RECORDER=/usr/local/bin/recpt1
 PERL=/usr/local/bin/perl
-ENCPROG=/home/www/epgrec/tsencode.pl
+ENCPROG=/home/www/epgrec/tsencode4.pl
+# ENCPROG=/home/www/epgrec/tsencode.pl
 ENC2PROG=/home/www/epgrec/tsencode2.pl
 
 if [ ${MODE} = 0 ]; then
@@ -25,8 +26,8 @@ elif [ ${MODE} == 2 ]; then
     mv ${OUTPUT}.log video/ts.log
 #    $PERL $ENC2PROG ${OUTPUT}_tmp.ts t3.mp4 640x360
 #     echo mv ${OUTPUT}_tmp.ts video/ts.ok >> video/tsencode.log
-#     mv ${OUTPUT}_tmp.ts video/ts.ok
-     rm ${OUTPUT}_tmp.ts
+     mv ${OUTPUT}_tmp.ts video/ts.ok
+#     rm ${OUTPUT}_tmp.ts
 
 # mode 2 example is as follows
 #elif [ ${MODE} = 2 ]; then

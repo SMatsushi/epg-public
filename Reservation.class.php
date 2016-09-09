@@ -39,6 +39,31 @@ class Reservation {
 		return $rval;
 	}
 	
+    // 終了時間を5分伸ばす。朝ドラ用。
+	public static function simpleP5( $program_id , $autorec = 0, $mode = 0) {
+		$settings = Settings::factory();
+		$rval = 0;
+		try {
+			$prec = new DBRecord( PROGRAM_TBL, "id", $program_id );
+			
+			$rval = self::custom(
+				$prec->starttime,
+				toDatetime(toTimestamp($prec->endtime) + (60 * 5)),
+				$prec->channel_id,
+				$prec->title,
+				$prec->description,
+				$prec->category_id,
+				$program_id,
+				$autorec,
+				$mode );
+				
+		}
+		catch( Exception $e ) {
+			throw $e;
+		}
+		return $rval;
+	}
+
 	public static function custom(
 		$starttime,				// 開始時間Datetime型
 		$endtime,				// 終了時間Datetime型
