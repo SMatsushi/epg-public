@@ -1,3 +1,0 @@
- /usr/local/bin/perl tsencode4.pl video/ts.ok/GR27_20160414080000_20160414082000_連続テレビ小説　とと姉ちゃん（１０）「常子、妹のために走る」【解】【字】【デ】.mp4_tmp.ts tsenc4.mp4 640x360 tsenc4.log
-
-[apache@Linux12 epgrec]$ ./tsencode5.pl video/ts.ok/GR27_20160414080000_20160414082000_連続テレビ小説　とと姉ちゃん（１０）「常子、妹のために走る」【解】【字】【デ】.mp4_tmp.ts tsenc5.mp4 640x360 tsenc5.log
