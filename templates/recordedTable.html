@@ -18,7 +18,7 @@
 		dialog:function(id, title){
 			$('#floatBox4Dialog').dialog({title:'削除',width:500});
 			var str = '<div class="prg_title">' + title + 'を削除します</div>';
-			str += '<form><div style="text-align:center;">録画ファイルも削除する<input type="checkbox" id="delete_file" name="delete_file" value="1" /></div></form>';
+			str += '<form><div style="text-align:center;">録画ファイルも削除する<input type="checkbox" id="delete_file" name="delete_file" value="1" checked/></div></form>';
 			str +='<div style="margin:2em 0 1em 0;text-align:center;"><a href="javascript:PRG.rec(' + id + ')" class="ui-state-default ui-corner-all ui-dialog-buttonpane button">この録画を本当に削除する</a></div>';
 			$('#floatBox4Dialog').html(str);
 			$('#floatBox4Dialog').dialog('open', 'center');
