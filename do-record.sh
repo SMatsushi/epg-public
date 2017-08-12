@@ -20,14 +20,23 @@ elif [ ${MODE} = 1 ]; then
    # 目的のSIDのみ残す
    $RECORDER --b25 --strip --sid $SID $CHANNEL $DURATION ${OUTPUT} >/dev/null
 elif [ ${MODE} == 2 ]; then
-    $RECORDER --b25 --strip $CHANNEL $DURATION ${OUTPUT}_tmp.ts >/dev/null
+    OUTPUT_TMP=${OUTPUT}_tmp.ts;
+    OUTPUT_LOG=${OUTPUT}.log;
+    $RECORDER --b25 --strip $CHANNEL $DURATION ${OUTPUT_TMP} >/dev/null
     # <-解像度は4:3で指定（理由は後述）
-    $PERL $ENCPROG ${OUTPUT}_tmp.ts ${OUTPUT} 640x360 ${OUTPUT}.log
-    mv ${OUTPUT}.log video/ts.log
+    $PERL $ENCPROG ${OUTPUT_TMP} ${OUTPUT} 640x360 ${OUTPUT_LOG}
+#    if [ -f ${OUTPUT} ]; then
+    if [ -s ${OUTPUT} ]; then
+        echo ${OUTPUT} exists and non-zero. Removing ${OUTPUT_TMP} >> ${OUTPUT_LOG}
+        mv ${OUTPUT_LOG} video/ts.log
+        rm ${OUTPUT_TMP}
+     else
+        echo ${OUTPUT} does not exist. Moving ${OUTPUT_TMP} to video/ts.bad >> ${OUTPUT_LOG}
+        mv ${OUTPUT_LOG} ${OUTPUT_TMP} video/ts.bad
+     fi
 #    $PERL $ENC2PROG ${OUTPUT}_tmp.ts t3.mp4 640x360
 #     echo mv ${OUTPUT}_tmp.ts video/ts.ok >> video/tsencode.log
 #     mv ${OUTPUT}_tmp.ts video/ts.ok
-     rm ${OUTPUT}_tmp.ts
 
 # mode 2 example is as follows
 #elif [ ${MODE} = 2 ]; then
