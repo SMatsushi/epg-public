@@ -13,6 +13,14 @@ ENCPROG=/home/www/epgrec/tsencode5.pl
 # ENCPROG=/home/www/epgrec/tsencode.pl
 ENC2PROG=/home/www/epgrec/tsencode2.pl
 
+echo "RECORDER : $RECORDER"
+echo "PERL : $PERL"
+echo "ENCPROG: $ENCPROG"
+# ENCPROG=/home/www/epgrec/tsencode.pl
+echo "ENC2PROG : $ENC2PROG"
+
+exit 0
+
 if [ ${MODE} = 0 ]; then
    # MODE=0では必ず無加工のTSを吐き出すこと
    $RECORDER --b25 --strip --sid epg $CHANNEL $DURATION ${OUTPUT} >/dev/null
