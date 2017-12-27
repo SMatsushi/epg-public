@@ -4,12 +4,11 @@ opendir(DIR, "./");
 foreach (readdir(DIR)) {
     next if /\.[^\.]+$/;
     next if /^\./;
-    printf("'%s'\n", $_);
-    if (/^(GR\d+)/) {
-        ENV{CHANNEL}=$1;
-    }
+#    printf("'%s'\n", $_);
 
-    ENV{MODE}="2";
-    ENV{DURATION}="2";
+    $cmd = "./do-reenc.sh $_";
+    printf("'%s'\n", $cmd);
+    system($cmd);
 }
+
 
