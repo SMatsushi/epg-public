@@ -48,6 +48,7 @@
   exec( $cmdline );
   if( file_exists( $xmlfile ) ) {
 	storeProgram( $type, $xmlfile );
+	copy( $xmlfile, $xmlfile.".old");
 	@unlink( $xmlfile );
   }
   else {

@@ -100,6 +100,12 @@ function storeProgram( $type, $xmlfile ) {
 		$starttime = str_replace(" +0900", '', $program['start'] );
 		$endtime = str_replace( " +0900", '', $program['stop'] );
 		$title = $program->title;
+		// タイトル中に半角スペースがあると途中でちぎれるので、全角に変換。コードはUTF-8
+	 	// $title = mb_convert_kana($title, 'S', 'UTF-8')
+	 	// その他の怪しげな文字種も全部全角化。特にカッコ系では誤動作する
+		$han = array('"', "'", '`', "\\", '(', ')', '/', ' ', '[', ']', ',', '.', '!', '?', ':', ';', '&', '<', '>');
+		$zen = array('”', "’", '｀', "＼", '（', '）', '／', '　', '［', '］', '，', '．', '！', '？', '：', '；', '＆', '＜', '＞');
+		$title = str_replace($han, $zen, $title);
 		$desc = $program->desc;
 		$cat_ja = "";
 		$cat_en = "";
