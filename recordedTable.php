@@ -48,9 +48,15 @@ if(isset( $_POST['do_search'] )) {
 
 $options .= " ORDER BY starttime DESC";
 
+function htmlentities2($str, $flag, $encoding) {
+    $newstr = str_replace("#", "%23", $str);
+    return htmlentities($newstr, $flag, $encoding);
+}
+
 try{
 	$rvs = DBRecord::createRecords(RESERVE_TBL, $options );
 	$records = array();
+
 	foreach( $rvs as $r ) {
 		$cat = new DBRecord(CATEGORY_TBL, "id", $r->category_id );
 		$ch  = new DBRecord(CHANNEL_TBL,  "id", $r->channel_id );
@@ -65,11 +71,11 @@ try{
 		$arr['title'] = htmlspecialchars($r->title,ENT_QUOTES);
 		$arr['description'] = htmlspecialchars($r->description,ENT_QUOTES);
 		// $arr['link'] = $settings->install_url.$settings->spool."/".htmlentities($r->path, ENT_QUOTES,"UTF-8");
-		$arr['link'] = "/epgrec".$settings->spool."/".htmlentities($r->path, ENT_QUOTES,"UTF-8");
-		$arr['publink'] = "/public"."/".htmlentities($r->path, ENT_QUOTES,"UTF-8");
-		$arr['linkname'] = htmlentities($r->path, ENT_QUOTES,"UTF-8");
+		$arr['link'] = "/epgrec".$settings->spool."/".htmlentities2($r->path, ENT_QUOTES,"UTF-8");
+		$arr['publink'] = "/public"."/".htmlentities2($r->path, ENT_QUOTES,"UTF-8");
+		$arr['linkname'] = htmlentities2($r->path, ENT_QUOTES,"UTF-8");
 		// $arr['thumb'] = "<img src=\"".$settings->install_url.$settings->thumbs."/".htmlentities($r->path, ENT_QUOTES,"UTF-8").".jpg\" />";
-		$arr['thumb'] = "<img src=\"/epgrec".$settings->thumbs."/".htmlentities($r->path, ENT_QUOTES,"UTF-8").".jpg\" />";
+		$arr['thumb'] = "<img src=\"/epgrec".$settings->thumbs."/".htmlentities2($r->path, ENT_QUOTES,"UTF-8").".jpg\" />";
 		$arr['cat'] = $cat->name_en;
 		$arr['mode'] = $RECORD_MODE[$r->mode]['name'];
 		if (file_exists(INSTALL_PATH.$settings->spool."/".$r->path))

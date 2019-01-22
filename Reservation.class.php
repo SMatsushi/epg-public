@@ -285,6 +285,8 @@ class Reservation {
 			
 			// preg_replaceがUTF-8に対応できない環境があるようなのでmb_ereg_replaceに戻す
 			$filename = mb_ereg_replace("[ \./\*:<>\?\\|()\'\"&]","_", trim($filename) );
+            // どうも半角#は問題を起こすようなので全角に変換 - which does not work on php5.3.*, fixed on php 7.*
+            $filename = mb_ereg_replace("#","＃", $filename);
 			
 			// 文字コード変換
 			if( defined("FILESYSTEM_ENCODING") ) {
