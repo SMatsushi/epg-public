@@ -27,9 +27,15 @@ elif [ ${MODE} == 2 ]; then
     $PERL $ENCPROG ${OUTPUT_TMP} ${OUTPUT} 640x360 ${OUTPUT_LOG}
 #    if [ -f ${OUTPUT} ]; then
     if [ -s ${OUTPUT} ]; then
-        echo ${OUTPUT} exists and non-zero. Removing ${OUTPUT_TMP} >> ${OUTPUT_LOG}
-        mv ${OUTPUT_LOG} video/ts.log
-        rm ${OUTPUT_TMP}
+        sz=`wc -c ${OUTPUT} | awk '{print int($1/1024)}'`
+        if [ $sz -gt 4098 ]; then
+            echo ${OUTPUT} exists and size=${sz} KB is big enough. Removing ${OUTPUT_TMP} >> ${OUTPUT_LOG}
+            mv ${OUTPUT_LOG} video/ts.log
+            rm ${OUTPUT_TMP}
+        else
+            echo ${OUTPUT} exists but size=${sz} KB is NOT big enough. Moving ${OUTPUT_TMP} to video/ts.bad >> ${OUTPUT_LOG}
+            mv ${OUTPUT_LOG} ${OUTPUT_TMP} video/ts.bad
+        fi
      else
         echo ${OUTPUT} does not exist. Moving ${OUTPUT_TMP} to video/ts.bad >> ${OUTPUT_LOG}
         mv ${OUTPUT_LOG} ${OUTPUT_TMP} video/ts.bad
