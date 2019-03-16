@@ -1,0 +1,8 @@
+AuthUserFile /home/www/epgrec/thumbs/.htpasswd
+AuthGroupFile /dev/null
+AuthName "Please enter your ID and PASSWORD"
+AuthType Basic
+require valid-user
+Allow from 199.241.144.0/24
+Allow from 192.168.0.0/16
+
