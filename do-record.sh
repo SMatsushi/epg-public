@@ -9,20 +9,26 @@ echo "SID  : $SID"
 
 RECORDER=/usr/local/bin/recpt1
 PERL=/usr/local/bin/perl
-ENCPROG=/home/www/epgrec/tsencode5.pl
+ENCPROG=/home/www/epgrec/tsencode6.pl
 # ENCPROG=/home/www/epgrec/tsencode.pl
 ENC2PROG=/home/www/epgrec/tsencode2.pl
+OUTPUT_LOG=${OUTPUT}.log
 
 if [ ${MODE} = 0 ]; then
    # MODE=0では必ず無加工のTSを吐き出すこと
-   $RECORDER --b25 --strip --sid epg $CHANNEL $DURATION ${OUTPUT} >/dev/null
+   echo "Running: $RECORDER --b25 --strip --sid epg $CHANNEL $DURATION ${OUTPUT}" > ${OUTPUT_LOG}
+   $RECORDER --b25 --strip --sid epg $CHANNEL $DURATION ${OUTPUT} >> ${OUTPUT_LOG} 2>&1
 elif [ ${MODE} = 1 ]; then
    # 目的のSIDのみ残す
-   $RECORDER --b25 --strip --sid $SID $CHANNEL $DURATION ${OUTPUT} >/dev/null
+   echo "Running: $RECORDER --b25 --strip --sid $SID $CHANNEL $DURATION ${OUTPUT}" > ${OUTPUT_LOG}
+   $RECORDER --b25 --strip --sid $SID $CHANNEL $DURATION ${OUTPUT} >> ${OUTPUT_LOG} 2>&1
 elif [ ${MODE} == 2 ]; then
-    OUTPUT_TMP=${OUTPUT}_tmp.ts;
-    OUTPUT_LOG=${OUTPUT}.log;
-    $RECORDER --b25 --strip $CHANNEL $DURATION ${OUTPUT_TMP} >/dev/null
+    OUTPUT_TMP=${OUTPUT}_tmp.ts
+    # cleanup log.
+    echo "Running: $RECORDER --b25 --strip $CHANNEL $DURATION ${OUTPUT_TMP}" > ${OUTPUT_LOG}
+
+    # run recpt1 to create ts
+    $RECORDER --b25 --strip $CHANNEL $DURATION ${OUTPUT_TMP} >> ${OUTPUT_LOG} 2>&1
     # <-解像度は4:3で指定（理由は後述）
     $PERL $ENCPROG ${OUTPUT_TMP} ${OUTPUT} 640x360 ${OUTPUT_LOG}
 #    if [ -f ${OUTPUT} ]; then
