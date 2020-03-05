@@ -14,18 +14,19 @@ ENCPROG=/home/www/epgrec/tsencode6.pl
 ENC2PROG=/home/www/epgrec/tsencode2.pl
 OUTPUT_LOG=${OUTPUT}.log
 
+# gen-thumbnail.sh runs fist to create thumbnail from ts file, which should overwrite log.
 if [ ${MODE} = 0 ]; then
    # MODE=0では必ず無加工のTSを吐き出すこと
-   echo "Running: $RECORDER --b25 --strip --sid epg $CHANNEL $DURATION ${OUTPUT}" > ${OUTPUT_LOG}
+   echo "Running: $RECORDER --b25 --strip --sid epg $CHANNEL $DURATION ${OUTPUT}" >> ${OUTPUT_LOG}
    $RECORDER --b25 --strip --sid epg $CHANNEL $DURATION ${OUTPUT} >> ${OUTPUT_LOG} 2>&1
 elif [ ${MODE} = 1 ]; then
    # 目的のSIDのみ残す
-   echo "Running: $RECORDER --b25 --strip --sid $SID $CHANNEL $DURATION ${OUTPUT}" > ${OUTPUT_LOG}
+   echo "Running: $RECORDER --b25 --strip --sid $SID $CHANNEL $DURATION ${OUTPUT}" >> ${OUTPUT_LOG}
    $RECORDER --b25 --strip --sid $SID $CHANNEL $DURATION ${OUTPUT} >> ${OUTPUT_LOG} 2>&1
 elif [ ${MODE} == 2 ]; then
     OUTPUT_TMP=${OUTPUT}_tmp.ts
     # cleanup log.
-    echo "Running: $RECORDER --b25 --strip $CHANNEL $DURATION ${OUTPUT_TMP}" > ${OUTPUT_LOG}
+    echo "Running: $RECORDER --b25 --strip $CHANNEL $DURATION ${OUTPUT_TMP}" >> ${OUTPUT_LOG}
 
     # run recpt1 to create ts
     $RECORDER --b25 --strip $CHANNEL $DURATION ${OUTPUT_TMP} >> ${OUTPUT_LOG} 2>&1
