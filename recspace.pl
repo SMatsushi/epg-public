@@ -25,7 +25,7 @@ my $videoGB;
 $cmd = "$df -lm";
 open (FH, "$cmd |");
 while (<FH>) {
-	if (m'/home') {
+	if (m'/home$') {
 		my @cols = split();
 		$freeGB = $cols[3] / 1024;
 		$usedGB = $cols[2] / 1024;
