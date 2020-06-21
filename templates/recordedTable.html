@@ -165,6 +165,7 @@ button#publish_button,   #category_select a.btn_private      {background-color: 
 <div>
 絞り込み：
 <form method="post" action="recordedTable.php" >
+&nbsp;&nbsp;
 <input type="hidden" name="do_search" value="1" />
 検索語句<input type="text" size="20" name="search" value="{$search}" />
 局<select name="station">
@@ -178,6 +179,24 @@ button#publish_button,   #category_select a.btn_private      {background-color: 
   {/foreach}
 </select>
 <input type="submit" value="絞り込む" />
+</form>
+</div>
+<div>
+表示：
+<form method="post" action="recordedTable.php" >
+&nbsp;&nbsp;
+<input type="hidden" name="disp_range" value="1" />
+表示件数<select name="disp_num">
+  {foreach from=$stations item=st}
+    <option value="{$st.id}" {$st.selected}>{$st.name}</option>
+  {/foreach}
+  </select>
+サムネイル件数<select name="category_id">
+ {foreach from=$cats item=cat}
+  <option value="{$cat.id}" {$cat.selected}>{$cat.name}</option>
+  {/foreach}
+</select>
+<input type="submit" value="再表示" />
 </form>
 </div>
 タイトルクリックで直接リンク視聴(Google Chromeのみ可)、サムネール右クリックから
